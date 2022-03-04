@@ -112,22 +112,22 @@ Once Anaconda is installed, you can run Jupyter. First, you need to create a dir
 
 1
 mkdir notebooks
-copy
+
 Then cd to this directory to run Jupyter from there:
 
 1
 cd notebooks
-copy
+
 It will use this directory for creating notebooks. Now let’s run Jupyter:
 
 1
 jupyter notebook
-copy
+
 This should be enough if you want to run Jupyter on a local computer. If you want to run it on a remote server, such as an EC2 instance from AWS, you need to add a few extra command-line options:
 
 1
 jupyter notebook --ip=0.0.0.0 --no-browser
-copy
+
 In this case, you must specify two things:
 
 The IP address Jupyter will use to accept incoming HTTP requests (--ip=0.0.0.0). By default it uses localhost, meaning that it’s possible to access the Notebook service only from within the computer.
@@ -149,7 +149,7 @@ When you run this command, you should see something similar to this:
         file:/ / /run/user/1000/jupyter/nbserver-3510-open.html
     Or copy and paste one of these URLs:
         http://(ip-172-31-21-255 or 127.0.0.1):8888/?token=670dfec7558c9a84689e4c3cdbb473e158d3328a40bf6bba
-copy
+
 When starting, Jupyter generates a random token. You need this token to access the web page. This is for security purposes, so no one can access the Notebook service but you.
 
 Copy the URL from the terminal, and replace (ip-172-31-21-255 or 127.0.0.1) with the instance URL. You should end up with something like this:
@@ -169,14 +169,14 @@ If you’re using a remote machine, when you exit the SSH session the Jupyter No
 
 1
 screen -R jupyter
-copy
+
 This command will attempt to connect to a screen with the name jupyter, but if no such screen exists, it will create one.
 
 Then, inside the screen, you can type the same command for starting Jupyter Notebook:
 
 1
 jupyter notebook --ip=0.0.0.0 --no-browser
-copy
+
 Check that it’s working by trying to access it from your web browser. After verifying that it works, you can detach the screen by pressing Ctrl-A followed by D: first press Ctrl-A, wait a bit, and then press D (for macOS, first press Ctrl-A and then press Ctrl-D). Anything running inside the screen is not attached to the current SSH session, so when you detach the screen and exit the session, the Jupyter process will keep running.
 
 You can now disconnect from SSH (by pressing Ctrl-D) and verify that the Jupyter URL is still working.
@@ -188,12 +188,12 @@ By default, there’s no browser configured to run in the Linux Subsystem. So we
 
 1
 jupyter notebook --no-browser
-copy
+
 Alternatively, we can set the BROWSER variable to point it to a browser from Windows:
 
 1
 export BROWSER='/mnt/c/Windows/explorer.exe'
-copy
+
 However, if you didn’t use the Linux Subsystem and installed Anaconda using the Windows Installer, starting the Jupyter Notebook service is different.
 
 First, we need to open the Anaconda Navigator in the start menu. Once it’s open, find Jupyter in the Applications tab and click Launch (figure A.9).
@@ -214,7 +214,7 @@ You can install it using pip:
 
 1
 pip install kaggle --upgrade
-copy
+
 Then you need to configure it. First, you need to get credentials from Kaggle. For that, go to your Kaggle profile (create one if you don’t have one yet), located at https://www.kaggle.com/<username>/account. The URL will be something like https://www.kaggle.com/agrigorev/account.
 
 In the API section, click Create New API Token (figure A.11).
@@ -227,26 +227,26 @@ This will download a file called kaggle.json, which is a JSON file with two fiel
 2
 mkdir ~/.kaggle
 mv kaggle.json ~/.kaggle/kaggle.json
-copy
+
 If you’re configuring it on a remote machine, such as an EC2 instance, you need to copy the content of this file and paste it into the terminal. Open the file using nano (this will create the file if it doesn’t exist):
 
 1
 2
 mkdir ~/.kaggle
 nano ~/.kaggle/kaggle.json
-copy
+
 Paste in the content of the kaggle.json file you downloaded. Save the file by pressing Ctrl-O and exit nano by pressing Ctrl-X.
 
 Now test that it’s working by trying to list the available datasets:
 
 1
 kaggle datasets list
-copy
+
 You can also test that it can download datasets by trying the dataset from chapter 2:
 
 1
 kaggle datasets download -d CooperUnion/cardataset
-copy
+
 It should download a file called cardataset.zip.
 
 # A.4 Accessing the source code
@@ -260,7 +260,7 @@ If your distribution doesn’t have Git, it’s easy to install it. For example,
 
 1
 sudo apt-get install git
-copy
+
 On macOS, to use Git you need to install Command Line Tools or, alternatively, download the installer at https://sourceforge.net/projects/git-osx-installer/.
 
 For Windows, you can download Git at https://git-scm.com/download/win.
@@ -269,14 +269,14 @@ Once you have Git installed, you can use it to get the book’s code. To access 
 
 1
 git clone https://github.com/alexeygrigorev/mlbookcamp-code.git
-copy
+
 Now you can run Jupyter Notebook:
 
 1
 2
 cd mlbookcamp-code
 jupyter notebook
-copy
+
 If you don’t have Git and don’t want to install it, it’s also possible to access the code without it. You can download the latest code in a zip archive and unpack it. On Linux, you can do that by executing these commands:
 
 1
@@ -287,7 +287,7 @@ wget -O mlbookcamp-code.zip \
     https://github.com/alexeygrigorev/mlbookcamp-code/archive/master.zip  
 unzip mlbookcamp-code.zip
 rm mlbookcamp-code.zip
-copy
+
 You can also just use your web browser: type the URL, download the zip archive, and extract the content.
 
 # A.5 Installing Docker
@@ -302,40 +302,40 @@ First, we need to install all the prerequisites:
 2
 sudo apt-get update
 sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
-copy
+
 Next, we add the repository with the Docker binaries:
 
 1
 2
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-copy
+
 Now we can install it:
 
 1
 2
 sudo apt-get update 
 sudo apt-get install docker-ce
-copy
+
 Finally, if we want to execute Docker commands without sudo, we need to add our user to the docker user group:
 
 1
 sudo adduser $(whoami) docker
-copy
+
 Now you’ll need to reboot your system. In the case of EC2 or another remote machine, just logging off and on is enough.
 
 To test that everything works fine, run the hello-world container:
 
 1
 docker run hello-world
-copy
+
 You should see a message saying that everything works:
 
 1
 2
 Hello from Docker!
 This message shows that your installation appears to be working correctly.
-copy
+
 ## A.5.2 Installing Docker on Windows
 To install Docker on Windows, you need to download the installer from the official website (https://hub.docker.com/editions/community/docker-ce-desktop-windows/) and simply follow the instructions.
 
